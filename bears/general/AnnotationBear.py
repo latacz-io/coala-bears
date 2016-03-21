@@ -1,6 +1,81 @@
 from coalib.parsing.StringProcessing.Core import (search_for,
                                                   search_in_between,
                                                   unescaped_search_in_between)
+from coalib.bearlib.languages.LanguageDefinition import LanguageDefinition
+from coalib.bears.LocalBear import LocalBear
+from coalib.results.HiddenResult import HiddenResult
+from coalib.results.SourceRange import SourceRange
+
+
+class AnnotationBear(LocalBear):
+
+    def run(self, filename, file, language: str, language_family: str):
+        """
+        Finds out all the positions of strings and comments in a file.
+        The Bear searches for valid comments and strings and yields their
+        ranges as SourceRange objects in HiddenResults.
+
+        :param language:        Language to be whose annotations are to be
+                                searched.
+        :param language_family: Language family whose annotations are to be
+                                searche.
+        :return:                HiddenResult with content conatining
+                                a tuple of tuples of the form
+                                (annotation_start, annotation_end).
+        """
+        text = ''.join(file)
+        lang_dict = LanguageDefinition(language, language_family)
+
+        # Strings
+        strings = dict(lang_dict["string_delimiters"])
+        strings.update(lang_dict["multiline_string_delimiters"])
+        strings_found = find_start_end(text, strings, escape=True)
+        # multiline Comments
+        comments_found = find_start_end(
+                                text,
+                                dict(lang_dict["multiline_comment_delimiters"]))
+        # single-line Comments
+        comments_found += find_singleline_comments(
+                                          text,
+                                          list(lang_dict["comment_delimiter"]))
+
+        matches_found = strings_found + comments_found
+        # Remove Nested
+        matches_found = tuple(filter(
+                              lambda arg: not in_ranges(matches_found, arg),
+                              matches_found))
+        # Yield results
+        for annotation_found in [strings_found, comments_found]:
+            position_range = tuple(AnnotationBear.get_range(text,
+                                                            filename,
+                                                            matches_found,
+                                                            annotation_found))
+            yield HiddenResult(self, position_range)
+
+    @classmethod
+    def get_range(cls, text, filename, matches_found, annotation_found):
+        """
+        yields position of valid annotations as SourceRange objects.
+
+        :param text:             A string with all the contents of file.
+        :param filename:         Name of file.
+        :param matches_found:    All the valid strings and comments found.
+        :param annotation_found: All the positions of the given annotation.
+
+        :return:                 SourceRange Objects of all the valid positions
+                                 of the annotation.
+            """
+        for position in set(matches_found) & set(annotation_found):
+            yield SourceRange.from_values(
+                    filename,
+                    start_line=calc_line_col(text,
+                                             position[0])[0],
+                    start_column=calc_line_col(text,
+                                               position[0])[1],
+                    end_line=calc_line_col(text,
+                                           position[1])[0],
+                    end_column=calc_line_col(text,
+                                             position[1])[1])
 
 
 def find_start_end(text, annot, escape=False):
