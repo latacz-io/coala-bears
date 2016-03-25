@@ -1,28 +1,26 @@
 import json
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import Linter
 from coalib.results.Result import Result
 from coalib.results.Diff import Diff
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class HaskellLintBear(LocalBear, Lint):
-    executable = 'hlint'
-    arguments = '--json {filename}'
-    severity_map = {
-        "Error": RESULT_SEVERITY.MAJOR,
-        "Warning": RESULT_SEVERITY.NORMAL,
-        "Suggestion": RESULT_SEVERITY.INFO}
-    gives_corrected = True
+@Linter(executable='hlint',
+        provides_correction=True,
+        severity_map={"Error": RESULT_SEVERITY.MAJOR,
+                      "Warning": RESULT_SEVERITY.NORMAL,
+                      "Suggestion": RESULT_SEVERITY.INFO})
+class HaskellLintBear:
+    """
+    Checks the given file with hlint.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the given file with hlint.
-        '''
-        return self.lint(filename=filename, file=file)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '--json', filename
 
-    def _process_corrected(self, output, filename, file):
+    def _process_output(self, output, filename, file):
         output = json.loads("".join(output))
 
         for issue in output:
