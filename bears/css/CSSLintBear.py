@@ -1,23 +1,18 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import Linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class CSSLintBear(LocalBear, Lint):
-    executable = 'csslint'
-    arguments = '--format=compact {filename}'
-    output_regex = re.compile(
-        r'(?P<file_name>.+):\s*'
-        r'(?:line (?P<line>\d+), col (?P<col>\d+), )?'
-        r'(?P<severity>Error|Warning) - (?P<message>.*)')
-    severity_map = {
-        "Error": RESULT_SEVERITY.MAJOR,
-        "Warning": RESULT_SEVERITY.NORMAL}
+@Linter(executable='csslint',
+        output_regex=r'(?P<file_name>.+):\s* (?:line (?P<line>\d+), '
+                     r'col (?P<col>\d+), )?(?P<severity>Error|Warning) - '
+                     r'(?P<message>.*)',
+        severity_map={"Error": RESULT_SEVERITY.MAJOR,
+                      "Warning": RESULT_SEVERITY.NORMAL})
+class CSSLintBear:
+    """
+    Checks the code with ``csslint``.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the code with `csslint`.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '--format=compact', filename

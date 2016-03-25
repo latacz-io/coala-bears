@@ -1,29 +1,25 @@
-import re
+import shlex
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import Linter
 
 
-class GoLintBear(LocalBear, Lint):
-    executable = 'golint'
-    output_regex = re.compile(
-            r'(?P<path>.*?)\:(?P<line>\d+)\:(?P<column>\d+)\: (?P<message>.*)')
-    use_stdout = True
+@Linter(executable='golint',
+        output_regex=r'(?P<path>.*?)\:(?P<line>\d+)\:(?P<column>\d+)\: '
+                     r'(?P<message>.*)')
+class GoLintBear:
+    """
+    Checks the code using `golint`. This will run golint over each file
+    seperately.
+    """
 
-    def run(self,
-            filename,
-            file,
-            golint_cli_options: str=""):
-        '''
-        Checks the code using `golint`. This will run golint over each file
-        seperately.
-
+    @staticmethod
+    def create_arguments(filename,
+                         file,
+                         config_file,
+                         golint_cli_options: str=''):
+        """
         :param golint_cli_options: Any other flags you wish to pass to golint
                                    can be passed.
-        '''
-        self.arguments = ""
-        if golint_cli_options:
-            self.arguments += " " + golint_cli_options
-        self.arguments += " {filename}"
-
-        return self.lint(filename)
+        """
+        return (tuple(shlex.split(golint_cli_options))
+                if golint_cli_options else tuple() + (filename,))

@@ -2,9 +2,7 @@ from csv import DictReader
 from io import StringIO
 
 from coalib.bearlib.abstractions.Linter import Linter
-from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import Result
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 def convert_if_not_empty(value: str, conversion):
@@ -21,10 +19,8 @@ def convert_if_not_empty(value: str, conversion):
     return None
 
 
-@Linter(executable='coffeelint',
-        severity_map={'warn': RESULT_SEVERITY.NORMAL,
-                      'error': RESULT_SEVERITY.MAJOR})
-class CoffeeLintBear(LocalBear, Lint):
+@Linter(executable='coffeelint')
+class CoffeeLintBear:
     """
     Coffeelint's your files!
     """
