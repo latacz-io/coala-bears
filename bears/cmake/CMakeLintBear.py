@@ -1,26 +1,21 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.misc.Shell import escape_path_argument
+from coalib.bearlib.abstractions.Linter import Linter
 from coalib.settings.Setting import path
 
 
-class CMakeLintBear(LocalBear, Lint):
-    executable = 'cmakelint'
-    output_regex = re.compile(
-            r'(?P<file_name>\S+):(?P<line>[0-9]+): (?P<message>.*)')
+@Linter(executable='cmakelint',
+        output_regex=r'(?P<file_name>\S+):(?P<line>[0-9]+): (?P<message>.*)')
+class CMakeLintBear:
+    """
+    Checks the code with ``cmakelint``.
+    """
 
-    def run(self, filename, file, cmakelint_config: path=""):
-        '''
-        Checks the code with ``cmakelint``.
-
+    @staticmethod
+    def create_arguments(filename,
+                         file,
+                         config_file,
+                         cmakelint_config: path=""):
+        """
         :param cmakelint_config: The location of the cmakelintrc config file.
-        '''
-        self.arguments = ""
-        if cmakelint_config:
-            self.arguments += (' --config=' +
-                               escape_path_argument(cmakelint_config))
-
-        self.arguments += ' {filename}'
-        return self.lint(filename)
+        """
+        return (('--config=' + cmakelint_config)
+                if cmakelint_config else tuple() + (filename,))
