@@ -1,18 +1,14 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import Linter
 
 
-class GoVetBear(LocalBear, Lint):
-    executable = 'go'
-    arguments = 'vet {filename}'
-    output_regex = re.compile(
-        r'(?P<file_name>.+):(?P<line>\d+): (?P<message>.*)\n')
-    use_stderr = True
+@Linter(executable='go',
+        use_stderr=True,
+        output_regex=r'.+:(?P<line>\d+): (?P<message>.*)\n')
+class GoVetBear:
+    """
+    Checks the code using `go vet`.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the code using `go vet`.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return 'vet', filename

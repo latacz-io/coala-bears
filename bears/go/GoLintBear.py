@@ -4,12 +4,11 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='golint',
-        output_regex=r'(?P<path>.*?)\:(?P<line>\d+)\:(?P<column>\d+)\: '
-                     r'(?P<message>.*)')
+        output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): (?P<message>.*)')
 class GoLintBear:
     """
     Checks the code using `golint`. This will run golint over each file
-    seperately.
+    separately.
     """
 
     @staticmethod
