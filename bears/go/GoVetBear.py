@@ -6,7 +6,7 @@ from coalib.bearlib.abstractions.Linter import Linter
         output_regex=r'.+:(?P<line>\d+): (?P<message>.*)\n')
 class GoVetBear:
     """
-    Checks the code using `go vet`.
+    Checks the code using ``go vet``.
     """
 
     @staticmethod

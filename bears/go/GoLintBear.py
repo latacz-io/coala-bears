@@ -7,7 +7,7 @@ from coalib.bearlib.abstractions.Linter import Linter
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): (?P<message>.*)')
 class GoLintBear:
     """
-    Checks the code using `golint`. This will run golint over each file
+    Checks the code using ``golint``. This will run golint over each file
     separately.
     """
 
