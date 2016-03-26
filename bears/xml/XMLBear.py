@@ -19,6 +19,7 @@ def path_or_url(xml_dtd):
         return path(xml_dtd)
 
 
+# TODO
 class XMLBear(LocalBear, Lint):
     executable = 'xmllint'
     diff_message = "XML can be formatted better."

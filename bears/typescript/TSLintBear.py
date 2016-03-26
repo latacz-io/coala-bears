@@ -7,6 +7,7 @@ from coalib.results.Result import Result
 from coalib.settings.Setting import path
 
 
+# TODO
 class TSLintBear(LocalBear, Lint):
     executable = 'tslint'
 
