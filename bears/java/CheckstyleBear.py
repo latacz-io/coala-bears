@@ -6,6 +6,7 @@ from coalib.bears.LocalBear import LocalBear
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
+# TODO
 class CheckstyleBear(LocalBear, Lint):
     executable = 'java'
     google_checks = join(dirname(abspath(__file__)), 'google_checks.xml')

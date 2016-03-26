@@ -8,6 +8,7 @@ from coalib.misc.Shell import escape_path_argument
 from coalib.results.Result import Result
 
 
+# TODO
 class ESLintBear(LocalBear, Lint):
     executable = 'eslint'
     severity_map = {

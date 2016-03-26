@@ -1,9 +1,10 @@
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import Linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-class JuliaLintBear(LocalBear, Lint):
+# TODO
+@Linter()
+class JuliaLintBear:
     executable = 'julia'
     arguments = '-e \'import Lint.lintfile; lintfile({filename})\''
     prerequisite_command = ['julia', '-e', 'import Lint.lintfile']

@@ -1,24 +1,14 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import Linter
 
 
-class InferBear(LocalBear, Lint):
-    executable = 'infer'
-    arguments = '-npb -- javac {filename}'
-    output_regex = re.compile(
-        r'(?P<file_name>.+):'
-        r'(?P<line>.+): '
-        r'(?P<severity>error|warning): '
-        r'(?P<message>.*)')
-    severity_map = {
-        "error": RESULT_SEVERITY.MAJOR,
-        "warning": RESULT_SEVERITY.NORMAL}
+@Linter(executable='infer',
+        output_regex=r'.+:(?P<line>\d+): (?P<severity>error|warning): '
+                     r'(?P<message>.*)')
+class InferBear:
+    """
+    Checks the code with ``infer``.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the code with ``infer``.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '-nbp', '--', 'javac', filename
