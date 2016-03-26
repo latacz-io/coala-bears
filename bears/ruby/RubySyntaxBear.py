@@ -1,24 +1,19 @@
-import re
-
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
-from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
+from coalib.bearlib.abstractions.Linter import Linter
 
 
-class RubySyntaxBear(LocalBear, Lint):
-    executable = 'ruby'
-    arguments = '-wc {filename}'
-    output_regex = re.compile(
-        r'(?P<file_name>.+?):(?P<line>\d+): (?P<message>'
-        r'.*?(?P<severity>error|warning)[,:] [^\r\n]+)\r?\n'
-        r'(?:^[^\r\n]+\r?\n^(?P<col>.*?)\^)?')
-    use_stderr = True
-    severity_map = {
-        "warning": RESULT_SEVERITY.NORMAL,
-        "error": RESULT_SEVERITY.MAJOR}
+# TODO Linter: enable multiline mode? or provide an extra field for match flags
+@Linter(executable='ruby',
+        use_stderr=True,
+        output_regex=r'.+?:(?P<line>\d+): (?P<message>.*?'
+                     r'(?P<severity>error|warning)[,:] \S+)\s?'
+                     r'(?:\S+\s(?P<column>.*?)\^)?')
+# TODO See old regex because of the start-anchors, presumably multiline spec
+# TODO was assumed
+class RubySyntaxBear:
+    """
+    Checks the code with ``ruby -wc`` on each file separately.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks the code with `ruby -wc` on each file separately.
-        '''
-        return self.lint(filename)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '-wc', filename

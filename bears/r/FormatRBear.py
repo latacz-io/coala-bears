@@ -2,6 +2,7 @@ from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 
 
+# TODO
 class FormatRBear(Lint, LocalBear):
     executable = "Rscript"
     arguments = "-e 'library(formatR)' -e 'formatR::tidy_source({filename})'"

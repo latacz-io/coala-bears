@@ -1,15 +1,14 @@
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import Linter
 
 
-class PyDocStyleBear(LocalBear, Lint):
-    executable = 'pydocstyle'
-    arguments = '{filename}'
-    output_regex = r'(.*\.py):(?P<line>\d+) (.+):\n\s+(?P<message>.*)'
-    use_stderr = True
+@Linter(executable='pydocstyle',
+        output_regex=r'.*\.py:(?P<line>\d+) .+:\n\s+(?P<message>.*)',
+        use_stderr=True)
+class PyDocStyleBear:
+    """
+    Checks python docstrings.
+    """
 
-    def run(self, filename, file):
-        '''
-        Checks python docstrings.
-        '''
-        return self.lint(filename, file)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return filename,

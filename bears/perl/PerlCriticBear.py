@@ -14,7 +14,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 class PerlCriticBear:
     """
     Checks the code with perlcritic. This will run perlcritic over each of the
-    files separately
+    files separately.
     """
 
     @staticmethod

@@ -7,6 +7,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.misc.Shell import escape_path_argument
 
 
+# TODO
 class ScalaLintBear(LocalBear, Lint):
     executable = 'java'
     current_file_dir = dirname(abspath(__file__))
