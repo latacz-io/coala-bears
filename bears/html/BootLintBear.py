@@ -4,6 +4,7 @@ from coalib.settings.Setting import typed_list
 
 
 @Linter(executable='bootlint',
+        output_format='regex',
         output_regex=r'.+:(?P<line>\d*):(?P<column>\d*) (?P<severity>.)\d+ '
                      r'(?P<message>.+)',
         severity_map={"W": RESULT_SEVERITY.NORMAL,
@@ -14,9 +15,7 @@ class BootLintBear:
     """
 
     @staticmethod
-    def create_arguments(filename,
-                         file,
-                         config_file,
+    def create_arguments(filename, file, config_file,
                          bootlint_ignore: typed_list(str)=[]):
         """
         :param bootlint_ignore: List of checkers to ignore.

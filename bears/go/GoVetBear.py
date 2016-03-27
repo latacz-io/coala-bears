@@ -3,6 +3,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 @Linter(executable='go',
         use_stderr=True,
+        output_format='corrected',
         output_regex=r'.+:(?P<line>\d+): (?P<message>.*)\n')
 class GoVetBear:
     """

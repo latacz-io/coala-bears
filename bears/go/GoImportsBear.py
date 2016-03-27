@@ -2,8 +2,8 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='goimports',
-        provides_correction=True,
         use_stdin=True,
+        output_format='corrected',
         diff_message='Imports need to be added/removed.')
 class GoImportsBear:
     """

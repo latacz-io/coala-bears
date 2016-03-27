@@ -14,7 +14,7 @@ class DockerfileLintBear:
     def create_arguments(filename, file, config_file):
         return '--json', '-f', filename
 
-    def _process_output(self, output, filename, file):
+    def process_output(self, output, filename, file):
         output = json.loads("".join(output))
 
         for severity in output:

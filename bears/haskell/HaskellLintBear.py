@@ -6,21 +6,21 @@ from coalib.results.Diff import Diff
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-@Linter(executable='hlint',
-        provides_correction=True,
-        severity_map={"Error": RESULT_SEVERITY.MAJOR,
-                      "Warning": RESULT_SEVERITY.NORMAL,
-                      "Suggestion": RESULT_SEVERITY.INFO})
+@Linter(executable='hlint')
 class HaskellLintBear:
     """
     Checks the given file with hlint.
     """
 
+    severity_map = {"Error": RESULT_SEVERITY.MAJOR,
+                    "Warning": RESULT_SEVERITY.NORMAL,
+                    "Suggestion": RESULT_SEVERITY.INFO}
+
     @staticmethod
     def create_arguments(filename, file, config_file):
         return '--json', filename
 
-    def _process_output(self, output, filename, file):
+    def process_output(self, output, filename, file):
         output = json.loads("".join(output))
 
         for issue in output:

@@ -29,7 +29,7 @@ class CoffeeLintBear:
     def create_arguments(filename, file, config_file):
         return '--reporter=csv', filename
 
-    def _process_output(self, output, filename, file):
+    def process_output(self, output, filename, file):
         reader = DictReader(StringIO("".join(output)))
 
         for row in reader:

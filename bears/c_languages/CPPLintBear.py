@@ -3,17 +3,16 @@ from coalib.settings.Setting import typed_list
 
 
 @Linter(executable='cpplint',
-        output_regex=r'(?P<filename>.+\..+):(?P<line>\d+):\s(?P<message>.+)',
-        use_stderr=True)
+        use_stderr=True,
+        output_format='regex',
+        output_regex=r'(?P<filename>.+\..+):(?P<line>\d+):\s(?P<message>.+)')
 class CPPLintBear:
     """
     Checks the code with `cpplint` on each file separately.
     """
 
     @staticmethod
-    def create_arguments(filename,
-                         file,
-                         config_file,
+    def create_arguments(filename, file, config_file,
                          max_line_length: int=80,
                          cpplint_ignore: typed_list(str)=[],
                          cpplint_include: typed_list(str)=[]):

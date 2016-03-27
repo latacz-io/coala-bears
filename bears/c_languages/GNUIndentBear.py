@@ -5,8 +5,8 @@ from coalib.bearlib.spacing.SpacingHelper import SpacingHelper
 
 
 @Linter(executable="indent" if platform.system() != "Darwin" else "gindent",
-        provides_correction=True,
         use_stdin=True,
+        output_format='corrected',
         diff_message="Indentation can be improved.")
 class GNUIndentBear:
     """
@@ -16,9 +16,7 @@ class GNUIndentBear:
     """
 
     @staticmethod
-    def create_arguments(filename,
-                         file,
-                         config_file,
+    def create_arguments(filename, file, config_file,
                          max_line_length: int=80,
                          use_spaces: bool=True,
                          tab_width: int=SpacingHelper.DEFAULT_TAB_WIDTH,

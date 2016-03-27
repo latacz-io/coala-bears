@@ -4,6 +4,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='golint',
+        output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): (?P<message>.*)')
 class GoLintBear:
     """
@@ -12,9 +13,7 @@ class GoLintBear:
     """
 
     @staticmethod
-    def create_arguments(filename,
-                         file,
-                         config_file,
+    def create_arguments(filename, file, config_file,
                          golint_cli_options: str=''):
         """
         :param golint_cli_options: Any other flags you wish to pass to golint

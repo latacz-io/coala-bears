@@ -2,6 +2,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='infer',
+        output_format='regex',
         output_regex=r'.+:(?P<line>\d+): (?P<severity>error|warning): '
                      r'(?P<message>.*)')
 class InferBear:

@@ -2,6 +2,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='mcs',
+        output_format='regex',
         output_regex=r'(?P<filename>.+\.cs)\((?P<line>\d+),(?P<col>\d+)\): '
                      r'(?P<severity>error|warning) (?P<severity_code>\w+): '
                      r'(?P<message>.+)',

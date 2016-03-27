@@ -3,6 +3,7 @@ from coalib.settings.Setting import typed_list
 
 
 @Linter(executable='html_lint.py',
+        output_format='regex',
         output_regex=r'(?P<line>\d+):(?P<column>\d+):\s'
                      r'(?P<severity>Error|Warning|Info):\s(?P<message>.+)')
 class HTMLLintBear:
@@ -11,10 +12,8 @@ class HTMLLintBear:
     """
 
     @staticmethod
-    def create_argument(filename,
-                        file,
-                        config_file,
-                        htmllint_ignore: typed_list(str)=[]):
+    def create_arguments(filename, file, config_file,
+                         htmllint_ignore: typed_list(str)=[]):
         """
         :param htmllint_include: List of checkers to ignore.
         """

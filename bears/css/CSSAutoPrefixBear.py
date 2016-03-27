@@ -2,7 +2,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='postcss',
-        provides_correction=True,
+        output_format='corrected',
         diff_message='Add vendor prefixes to CSS rules.',
         prerequisite_check_command=('postcss', '--use', 'autoprefixer'),
         prerequisite_check_fail_message='Autoprefixer is not installed.')

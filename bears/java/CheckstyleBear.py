@@ -8,6 +8,7 @@ google_checks = join(dirname(abspath(__file__)), 'google_checks.xml')
 
 
 @Linter(executable='java',
+        output_format='regex',
         output_regex=r'\[(?P<severity>WARN|INFO)\] *.+:'
                      r'(?P<line>\d+)(?::(?P<column>\d+))?: *'
                      r'(?P<message>.*?) *\[(?P<origin>[a-zA-Z]+?)\]',
