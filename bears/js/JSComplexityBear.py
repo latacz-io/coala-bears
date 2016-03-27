@@ -1,12 +1,24 @@
 import json
 
-from coalib.bearlib.abstractions.Lint import Lint
-from coalib.bears.LocalBear import LocalBear
+from coalib.bearlib.abstractions.Linter import Linter
 from coalib.results.Result import Result
 
 
-class JSComplexityBear(LocalBear, Lint):
-    executable = "cr"
+@Linter(executable='cr')
+class JSComplexityBear:
+    """
+    Calculates cyclomatic complexity using ``cr``.
+    """
+
+    @staticmethod
+    def create_arguments(filename, file, config_file,
+                         cc_threshold: int=10):
+        """
+        :param cc_threshold: Threshold value for cyclomatic complexity
+        """
+        # TODO !!!
+        self.cc_threshold = cc_threshold
+        return '--format', 'json', filename
 
     def process_output(self, output, filename, file):
         message = "{} has a cyclomatic complexity of {}."
@@ -20,16 +32,3 @@ class JSComplexityBear(LocalBear, Lint):
                                                function["cyclomatic"]),
                         file=filename,
                         line=function["line"])
-
-    def run(self,
-            filename,
-            file,
-            cc_threshold: int=10):
-        """
-        Calculates cyclomatic complexity using ``cr``.
-
-        :param cc_threshold: Threshold value for cyclomatic complexity
-        """
-        self.cc_threshold = cc_threshold
-        self.arguments = "--format json {filename}"
-        return self.lint(filename, file)
