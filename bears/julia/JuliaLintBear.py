@@ -3,23 +3,22 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
 # TODO
-@Linter()
+@Linter(executable='julia',
+        output_format='regex',
+        output_regex=r'.+:(?P<line>\d+) (?P<severity>.)\d+ (?P<message>.*)',
+        severity_map={'E': RESULT_SEVERITY.MAJOR,
+                      'W': RESULT_SEVERITY.NORMAL,
+                      'I': RESULT_SEVERITY.INFO},
+        prerequisite_check_command=('julia', '-e', 'import Lint.lintfile'),
+        prerequisite_check_fail_message='Lint package not installed. Run '
+                                        '`Pkg.add("Lint")` from Julia to '
+                                        'install Lint.')
 class JuliaLintBear:
-    executable = 'julia'
-    arguments = '-e \'import Lint.lintfile; lintfile({filename})\''
-    prerequisite_command = ['julia', '-e', 'import Lint.lintfile']
-    prerequisite_fail_msg = 'Run `Pkg.add("Lint")` from Julia to install Lint.'
-    output_regex = r'(^.*\.jl):(?P<line>\d+) (?P<severity>.)\d+ (?P<message>.*)'
-    use_stdout = True
-    severity_map = {
-        "E": RESULT_SEVERITY.MAJOR,
-        "W": RESULT_SEVERITY.NORMAL,
-        "I": RESULT_SEVERITY.INFO
-    }
+    """
+    Lints Julia code using ``Lint.jl``.
+    https://github.com/tonyhffong/Lint.jl
+    """
 
-    def run(self, filename, file):
-        '''
-        Lints Julia code using ``Lint.jl``.
-        https://github.com/tonyhffong/Lint.jl
-        '''
-        return self.lint(filename, file)
+    @staticmethod
+    def create_arguments(filename, file, config_file):
+        return '-e', '"import Lint.lintfile; lintfile(' + filename + ')"'

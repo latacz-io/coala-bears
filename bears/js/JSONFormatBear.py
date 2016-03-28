@@ -7,6 +7,7 @@ from coalib.bears.LocalBear import LocalBear
 from coalib.results.Result import Result
 
 
+# TODO
 class JSONFormatBear(Lint, LocalBear):
     try:
         DecodeError = json.decoder.JSONDecodeError
