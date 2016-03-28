@@ -2,6 +2,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='luacheck',
+        output_format='regex',
         output_regex=r'\s*.+:(?P<line>\d+):(?P<column>\d+): (?P<message>.+)')
 class LuaLintBear:
     """

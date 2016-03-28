@@ -21,4 +21,4 @@ class JuliaLintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return '-e', '"import Lint.lintfile; lintfile(' + filename + ')"'
+        return '-e', 'import Lint.lintfile; lintfile(' + filename + ')'

@@ -6,6 +6,7 @@ from coalib.bears.LocalBear import LocalBear
 from coalib.settings.Setting import typed_list
 
 
+# TODO
 class PEP8Bear(Lint, LocalBear):
     diff_message = "The code does not comply to PEP8."
     gives_corrected = True

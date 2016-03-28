@@ -7,6 +7,7 @@ from coalib.settings.Setting import typed_list
 
 
 @Linter(executable='pylint',
+        output_format='regex',
         output_regex=r'(?P<line>\d+)\.(?P<column>\d+)\|'
                      r'(?P<severity>[WFECRI]): (?P<message>.*)',
         severity_map={'F': RESULT_SEVERITY.MAJOR,
@@ -22,9 +23,7 @@ class PyLintBear:
     """
 
     @staticmethod
-    def create_arguments(filename,
-                         file,
-                         config_file,
+    def create_arguments(filename, file, config_file,
                          pylint_disable: typed_list(str)=None,
                          pylint_enable: typed_list(str)=None,
                          pylint_cli_options: str="",

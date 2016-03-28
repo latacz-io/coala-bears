@@ -4,6 +4,7 @@ from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 
 
+# TODO
 class PyUnusedCodeBear(Lint, LocalBear):
     diff_message = "This file contains unused source code."
     gives_corrected = True

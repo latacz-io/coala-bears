@@ -2,6 +2,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='chktex',
+        output_format='regex',
         output_regex=r'(?P<severity>Error|Warning) \d+ in .+ line '
                      r'(?P<line>\d+): (?P<message>.*)')
 class LatexLintBear:

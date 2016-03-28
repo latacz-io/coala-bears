@@ -4,6 +4,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 # TODO Check all regexes again, I've removed some greedy specifiers...
 @Linter(executable='perlcritic',
+        output_format='regex',
         output_regex=r'(?P<line>\d+)\|(?P<column>\d+)\|(?P<severity>\d+)\|'
                      r'(?P<origin>.*?)\|(?P<message>.*)',
         severity_map={"1": RESULT_SEVERITY.MAJOR,

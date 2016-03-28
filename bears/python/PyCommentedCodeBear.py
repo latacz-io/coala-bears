@@ -4,6 +4,7 @@ from coalib.bearlib.abstractions.Lint import Lint
 from coalib.bears.LocalBear import LocalBear
 
 
+# TODO
 class PyCommentedCodeBear(Lint, LocalBear):
     gives_corrected = True
     diff_message = "This file contains commented out source code."
