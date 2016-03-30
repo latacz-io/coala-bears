@@ -11,14 +11,14 @@ scalastyle_config_file = join(dirname(abspath(__file__)),
 @Linter(executable='java',
         output_format='regex',
         output_regex=r'(?P<severity>warning) file=.+ message=(?P<message>.+) '
-                     r'line=(?P<line>\d+)( column=(?P<column>\d+))?',
+                     r'line=(?P<line>\d+)(?: column=(?P<column>\d+))?',
         prerequisite_check_command=('java', '-jar', jar, '-c',
                                     scalastyle_config_file, '.', '-q', 'true'),
         prerequisite_check_fail_message='Required jar file ' + jar +
                                         ' not found.')
 class ScalaLintBear:
     """
-    Checks the code with `scalastyle` on each file separately.
+    Checks the code with ``scalastyle`` on each file separately.
     """
 
     @staticmethod

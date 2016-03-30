@@ -2,7 +2,6 @@ from coalib.bearlib.abstractions.Linter import Linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-# TODO
 @Linter(executable='julia',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+) (?P<severity>.)\d+ (?P<message>.*)',
