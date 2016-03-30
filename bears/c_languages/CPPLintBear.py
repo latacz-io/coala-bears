@@ -3,7 +3,7 @@ from coalib.settings.Setting import typed_list
 
 
 @Linter(executable='cpplint',
-        use_stderr=True,
+        output_stream='stderr',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+): (?P<message>.+)')
 class CPPLintBear:

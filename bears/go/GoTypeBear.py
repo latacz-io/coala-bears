@@ -2,7 +2,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='gotype',
-        use_stderr=True,
+        output_stream='stderr',
         output_format='regex',
         output_regex=r'.+:(?P<line>\d+):(?P<column>\d+): *(?P<message>.*)')
 class GoTypeBear:

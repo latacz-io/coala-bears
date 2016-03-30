@@ -20,7 +20,7 @@ def path_or_url(xml_dtd):
 
 
 @Linter(executable='xmllint',
-        use_stderr=True)
+        output_stream='stderr',)
 class XMLBear:
     """
     Checks the code with ``xmllint``.

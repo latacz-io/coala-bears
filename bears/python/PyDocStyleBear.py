@@ -2,7 +2,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 
 @Linter(executable='pydocstyle',
-        use_stderr=True,
+        output_stream='stderr',
         output_format='regex',
         output_regex=r'.*:(?P<line>\d+) .+:\n\s+(?P<message>.*)')
 class PyDocStyleBear:
