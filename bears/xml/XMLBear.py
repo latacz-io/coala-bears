@@ -1,8 +1,7 @@
 import itertools
+import re
 
 from coalib.bearlib.abstractions.Linter import Linter
-from coalib.bears.LocalBear import LocalBear
-from coalib.misc.Shell import escape_path_argument
 from coalib.settings.Setting import path, url
 
 
@@ -20,16 +19,12 @@ def path_or_url(xml_dtd):
 
 
 @Linter(executable='xmllint',
-        output_stream='stderr',)
+        output_stream='stdout+stderr')
 class XMLBear:
     """
     Checks the code with ``xmllint``.
     """
-    executable = 'xmllint'
-    diff_message = "XML can be formatted better."
-    output_regex = r'(.*\.xml):(?P<line>\d+): (?P<message>.*)\n.*\n.*'
-    gives_corrected = True
-    use_stderr = True
+    output_regex = re.compile(r'.*:(?P<line>\d+): (?P<message>.*)\n.*\n.*')
 
     @staticmethod
     def create_arguments(filename, file, config_file,
@@ -47,12 +42,17 @@ class XMLBear:
             args += ('-dtdvalid', xml_dtd)
         return args
 
-    # TODO: Integrate multi-output grabbing into the linter.
     def process_output(self, output, filename, file):
-        if self.stdout_output:
+        if output[0]:
             # Return issues from stderr and stdout if stdout is not empty
             return itertools.chain(
-                self._process_issues(self.stderr_output, filename),
-                self._process_corrected(self.stdout_output, filename, file))
+                self.process_output_regex(
+                    output[1], filename, file,
+                    output_regex=self.output_regex),
+                self.process_output_corrected(
+                    output[0], filename, file,
+                    diff_message="XML can be formatted better."))
         else:  # Return issues from stderr if stdout is empty
-            return self._process_issues(self.stderr_output, filename)
+            return self.process_output_regex(
+                output[0], filename, file,
+                output_regex=self.output_regex)
