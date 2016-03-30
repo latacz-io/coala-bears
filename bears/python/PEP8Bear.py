@@ -33,8 +33,8 @@ class PEP8Bear(LocalBear):
                    "indent_size": tab_width}
 
         corrected = autopep8.fix_code(''.join(file),
-                                           apply_config=local_pep8_config,
-                                           options=options).splitlines(True)
+                                      apply_config=local_pep8_config,
+                                      options=options).splitlines(True)
 
         diffs = Diff.from_string_arrays(file, corrected).split_diff()
 
