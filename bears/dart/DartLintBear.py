@@ -4,8 +4,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 @Linter(executable='dartanalyzer',
         output_format='regex',
         output_regex=r'\[(?P<severity>error|warning)\] (?P<message>.+)\('
-                     r'(?P<file_name>.+), line (?P<line>\d+),'
-                     r' col (?P<column>\d+)\)')
+                     r'.+, line (?P<line>\d+), col (?P<column>\d+)\)')
 class DartLintBear:
     """
     Checks the code with ``dart-linter``.

@@ -30,7 +30,7 @@ class CoffeeLintBear:
         return '--reporter=csv', filename
 
     def process_output(self, output, filename, file):
-        reader = DictReader(StringIO("".join(output)))
+        reader = DictReader(StringIO(output))
 
         for row in reader:
             try:

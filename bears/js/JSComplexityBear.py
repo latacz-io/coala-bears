@@ -23,7 +23,7 @@ class JSComplexityBear:
     def process_output(self, output, filename, file):
         message = "{} has a cyclomatic complexity of {}."
         if output:
-            output = json.loads("".join(output))
+            output = json.loads(output)
             for function in output["reports"][0]["functions"]:
                 if function["cyclomatic"] >= self.cc_threshold:
                     yield Result.from_values(

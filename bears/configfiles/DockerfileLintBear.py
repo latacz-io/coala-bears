@@ -15,7 +15,7 @@ class DockerfileLintBear:
         return '--json', '-f', filename
 
     def process_output(self, output, filename, file):
-        output = json.loads("".join(output))
+        output = json.loads(output)
 
         for severity in output:
             if severity == "summary":

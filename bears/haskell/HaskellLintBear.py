@@ -9,7 +9,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 @Linter(executable='hlint')
 class HaskellLintBear:
     """
-    Checks the given file with hlint.
+    Checks the given file with ``hlint``.
     """
 
     severity_map = {"Error": RESULT_SEVERITY.MAJOR,
@@ -21,7 +21,7 @@ class HaskellLintBear:
         return '--json', filename
 
     def process_output(self, output, filename, file):
-        output = json.loads("".join(output))
+        output = json.loads(output)
 
         for issue in output:
             assert issue["startLine"] == issue["endLine"]

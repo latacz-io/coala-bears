@@ -4,7 +4,7 @@ from coalib.bearlib.abstractions.Linter import Linter
 @Linter(executable='pydocstyle',
         use_stderr=True,
         output_format='regex',
-        output_regex=r'.*\.py:(?P<line>\d+) .+:\n\s+(?P<message>.*)')
+        output_regex=r'.*:(?P<line>\d+) .+:\n\s+(?P<message>.*)')
 class PyDocStyleBear:
     """
     Checks python docstrings.

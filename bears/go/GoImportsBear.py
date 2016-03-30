@@ -12,4 +12,4 @@ class GoImportsBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file):
-        return tuple()
+        return ()

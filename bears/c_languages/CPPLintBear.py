@@ -5,10 +5,10 @@ from coalib.settings.Setting import typed_list
 @Linter(executable='cpplint',
         use_stderr=True,
         output_format='regex',
-        output_regex=r'(?P<filename>.+\..+):(?P<line>\d+):\s(?P<message>.+)')
+        output_regex=r'.+:(?P<line>\d+): (?P<message>.+)')
 class CPPLintBear:
     """
-    Checks the code with `cpplint` on each file separately.
+    Checks the code with ``cpplint`` on each file separately.
     """
 
     @staticmethod

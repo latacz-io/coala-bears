@@ -4,7 +4,7 @@ from coalib.settings.Setting import path
 
 @Linter(executable='cmakelint',
         output_format='regex',
-        output_regex=r'(?P<file_name>\S+):(?P<line>[0-9]+): (?P<message>.*)')
+        output_regex=r'.+:(?P<line>\d+): (?P<message>.*)')
 class CMakeLintBear:
     """
     Checks the code with ``cmakelint``.
@@ -16,5 +16,7 @@ class CMakeLintBear:
         """
         :param cmakelint_config: The location of the cmakelintrc config file.
         """
-        return (('--config=' + cmakelint_config)
-                if cmakelint_config else tuple() + (filename,))
+        args = ()
+        if cmakelint_config:
+            args += ('--config=' + cmakelint_config)
+        return args + (filename,)

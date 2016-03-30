@@ -4,7 +4,7 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 @Linter(executable='php',
         output_format='regex',
-        output_regex=r'(?P<severity>\S+) error: (?P<message>.*) in '
+        output_regex=r'(?P<severity>Parse|Fatal) error: (?P<message>.*) in '
                      r'.* on line (?P<line>\d+)',
         severity_map={'Parse': RESULT_SEVERITY.MAJOR,
                       'Fatal': RESULT_SEVERITY.MAJOR})

@@ -3,8 +3,8 @@ from coalib.bearlib.abstractions.Linter import Linter
 
 @Linter(executable='csslint',
         output_format='regex',
-        output_regex=r'(?P<file_name>.+):\s* (?:line (?P<line>\d+), '
-                     r'col (?P<col>\d+), )?(?P<severity>Error|Warning) - '
+        output_regex=r'.+: *(?:line (?P<line>\d+), '
+                     r'col (?P<column>\d+), )?(?P<severity>Error|Warning) - '
                      r'(?P<message>.*)')
 class CSSLintBear:
     """

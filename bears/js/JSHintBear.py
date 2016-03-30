@@ -21,7 +21,7 @@ def bool_or_int(value):
 @Linter(executable='jshint',
         output_format='regex',
         output_regex=r'.+?: line (?P<line>\d+), col (?P<column>\d+), '
-                     r'(?P<message>.+) \((?P<severity>\S)\d+\)',
+                     r'(?P<message>.+) \((?P<severity>[EWI])\d+\)',
         severity_map={'E': RESULT_SEVERITY.MAJOR,
                       'W': RESULT_SEVERITY.NORMAL,
                       'I': RESULT_SEVERITY.MINOR})

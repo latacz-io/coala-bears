@@ -16,8 +16,9 @@ class GoLintBear:
     def create_arguments(filename, file, config_file,
                          golint_cli_options: str=''):
         """
-        :param golint_cli_options: Any other flags you wish to pass to golint
-                                   can be passed.
+        :param golint_cli_options: Any other flags you wish to pass to golint.
         """
-        return (tuple(shlex.split(golint_cli_options))
-                if golint_cli_options else tuple() + (filename,))
+        args = ()
+        if golint_cli_options:
+            args += tuple(shlex.split(golint_cli_options))
+        return args + (filename,)

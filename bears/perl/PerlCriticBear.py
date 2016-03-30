@@ -2,7 +2,6 @@ from coalib.bearlib.abstractions.Linter import Linter
 from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 
 
-# TODO Check all regexes again, I've removed some greedy specifiers...
 @Linter(executable='perlcritic',
         output_format='regex',
         output_regex=r'(?P<line>\d+)\|(?P<column>\d+)\|(?P<severity>\d+)\|'
@@ -19,9 +18,7 @@ class PerlCriticBear:
     """
 
     @staticmethod
-    def create_arguments(filename,
-                         file,
-                         config_file,
+    def create_arguments(filename, file, config_file,
                          perlcritic_profile: str=""):
         """
         :param perlcritic_profile: Location of the perlcriticrc config file.

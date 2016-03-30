@@ -14,9 +14,9 @@ class ESLintBear:
     files separately.
     """
 
-    severity_map = {2: RESULT_SEVERITY.MAJOR,
-                    1: RESULT_SEVERITY.NORMAL,
-                    0: RESULT_SEVERITY.INFO}
+    severity_map = {"2": RESULT_SEVERITY.MAJOR,
+                    "1": RESULT_SEVERITY.NORMAL,
+                    "0": RESULT_SEVERITY.INFO}
 
     @staticmethod
     def create_arguments(filename, file, config_file,
@@ -30,7 +30,7 @@ class ESLintBear:
         return args
 
     def process_output(self, output, filename, file):
-        output = json.loads("".join(output))
+        output = json.loads(output)
         lines = "".join(file)
 
         assert len(output) == 1
