@@ -19,7 +19,6 @@ class FormatRBear:
     def process_output(self, output, filename, file):
         output = output.splitlines(True)
         output = "".join(output[:-1] + [output[-1].strip() + "\n"])
-        # TODO Improve splitting stuff?
         return self.process_corrected_output_format(
             output, filename, file,
             diff_message='Formatting can be improved.')

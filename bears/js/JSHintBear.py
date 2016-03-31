@@ -284,10 +284,6 @@ class JSHintBear:
         :param es_version:
             This option is used to specify the ECMAScript version to which the
             code must adhere to.
-        :param jshint_config:
-            The location of the jshintrc config file. If this option is present
-            all the above options are not used. Instead the .jshintrc file is
-            used as the configuration file.
         """
         if jshint_config:
             options = {"bitwise": prohibit_bitwise,
@@ -363,7 +359,12 @@ class JSHintBear:
 
     @staticmethod
     def create_arguments(filename, file, config_file, jshint_config):
-        # TODO Is jshint_config doc overridden on signature merge???
+        """
+        :param jshint_config:
+            The location of the jshintrc config file. If this option is present
+            all the above options are not used. Instead the .jshintrc file is
+            used as the configuration file.
+        """
         args = ('--verbose', filename, '--config')
         if jshint_config:
             args += (jshint_config,)
