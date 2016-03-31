@@ -11,21 +11,18 @@ class JSComplexityBear:
     """
 
     @staticmethod
-    def create_arguments(filename, file, config_file,
-                         cc_threshold: int=10):
+    def create_arguments(filename, file, config_file):
+        return '--format', 'json', filename
+
+    def process_output(self, output, filename, file, cc_threshold: int=10):
         """
         :param cc_threshold: Threshold value for cyclomatic complexity
         """
-        # TODO !!!
-        self.cc_threshold = cc_threshold
-        return '--format', 'json', filename
-
-    def process_output(self, output, filename, file):
         message = "{} has a cyclomatic complexity of {}."
         if output:
             output = json.loads(output)
             for function in output["reports"][0]["functions"]:
-                if function["cyclomatic"] >= self.cc_threshold:
+                if function["cyclomatic"] >= cc_threshold:
                     yield Result.from_values(
                         origin=self,
                         message=message.format(function["name"],
